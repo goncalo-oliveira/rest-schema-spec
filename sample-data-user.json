@@ -1,0 +1,17 @@
+{
+    "id": 10,
+    "name": "John Doe",
+    "dob": "1990-01-23",
+    "phoneNumber": "55000000000",
+    "email": "johndoe@email.com",
+    "teams": [
+        {
+            "id": 13,
+            "name": "Marketing"
+        },
+        {
+            "id": 18,
+            "name": "Employees"
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "version": "0.1",
+    "spec": {
+        "user": ["name", "email", "teams"],
+        "teams": ["id", "name"]
+    }
+}
