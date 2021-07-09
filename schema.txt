@@ -1,1 +1,1 @@
-#0.1?user:name,email,teams;?teams:id,name;
+user=name,email;teams=id,name

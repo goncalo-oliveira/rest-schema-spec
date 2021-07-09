@@ -206,13 +206,13 @@ Plain text schema data doesn't use encoding and if implemented, it should only b
 Here's an example of the same schema data above in plain text
 
 ```text
-?user:name,email,teams;?teams:id
+user=name,email,teams;teams=id
 ```
 
-Multiple schemas should be separated by a `;` character. The root schema name is optional, so the above could be simply
+Multiple schemas should be separated by a `;` character. The root schema name is optional, so the above could simply be written like this
 
 ```text
-?name,email,teams;?teams:id
+name,email,teams;teams=id
 ```
 
 ## Schema Data Encoding
@@ -245,5 +245,6 @@ GET /users?schemaMap=eyJzcGVjIjp7Il8iOlsibmFtZSIsICJlbWFpbCJdfX0
 ## Schema Version
 
 The versioning in the schema data is optional, but could be useful to avoid unsupported actions. The way the API reacts is up to the implementation; it can respond with a 400 (bad request) or simply ignore the schema. See the full spec for details.
+The client can also send the schema version in the `X-Schema-Version` header, but it does not take precedence if also defined in the schema data.
 
 The API response MUST include the `X-Schema-Version` header if the request includes schema data, even if the version is not supported and the schema ignored.
