@@ -12,8 +12,10 @@ The schema spec is then encoded as base64 or base64url and passed through a requ
 
 ## Schema-Mapping
 
+```none
 Header name   : X-Schema-Map
 Parameter name: schemaMap
+```
 
 This operation uses the schema data to map the results of a resource. Only properties that match the schema are retrieved.
 
@@ -21,6 +23,7 @@ For example, let's consider the following request and the default response
 
 ```json
 GET /users/10
+---
 {
     "id": 10,
     "name": "John Doe",
@@ -55,6 +58,7 @@ And add the `X-Schema-Map` header, we would get the following response instead
 ```json
 GET /users/10
 X-Schema-Map: ewogICAgInNwZWMiOiB7CiAgICAgICAgIl8iOiBbIm5hbWUiLCAiZW1haWwiXQogICAgfQp9Cg
+---
 {
     "name": "John Doe",
     "email": "johndoe@email.com"
@@ -66,6 +70,7 @@ The same works if the response is a list of users, instead of a single user
 ```json
 GET /users
 X-Schema-Map: ewogICAgInNwZWMiOiB7CiAgICAgICAgIl8iOiBbIm5hbWUiLCAiZW1haWwiXQogICAgfQp9Cg
+---
 [
     {
         "name": "John Doe",
@@ -79,8 +84,10 @@ X-Schema-Map: ewogICAgInNwZWMiOiB7CiAgICAgICAgIl8iOiBbIm5hbWUiLCAiZW1haWwiXQogIC
 
 ## Schema-Include
 
+```none
 Header name   : X-Schema-Include
 Parameter name: schemaInclude
+```
 
 This operation is to be used in place of `Schema-Mapping`. If both `Schema-Mapping` and `Schema-Include` are specified, the latter is ignored.
 
@@ -88,6 +95,7 @@ The purpose of this operation is to include information that isn't returned by d
 
 ```json
 GET /users/10
+---
 {
     "id": 10,
     "name": "John Doe",
@@ -101,6 +109,7 @@ In order to get the user's teams, we would typically require a second request
 
 ```json
 GET /users/10/teams
+---
 [
     {
         "id": 13,
@@ -128,6 +137,7 @@ This would instruct the API to get the dependency data and we would get the foll
 ```json
 GET /users/10
 X-Schema-Include: ewogICAgInNwZWMiOiB7CiAgICAgICAgIl8iOiBbInRlYW1zIl0KICAgIH0KfQ
+---
 {
     "id": 10,
     "name": "John Doe",
@@ -157,6 +167,7 @@ Let's consider the following resource as an example
 
 ```json
 GET /users/10
+---
 {
     "id": 10,
     "name": "John Doe",
@@ -188,13 +199,24 @@ A basic example of schema data, to use on a `Schema-Mapping` operation, would be
 
 The first (root) element is the mapping for our result and it can be named whatever we want - the name is indifferent.
 
-We can also specify additional schemas for complex (objects) properties. Still using the above example, we can further describe the properties to retrieve for the teams, but we are only interested in their ids, not the names. Here, the name of the schema needs to match the name of the property.
+We can also specify additional schemas for complex (objects) properties. Still using the above example, we can further describe the properties to retrieve for the teams, saying we are only interested in their ids, not the names. Here, the name of the schema needs to match the name of the property.
 
 ```json
 {
     "spec": {
         "_": ["name", "email", "teams"],
         "teams": ["id"]
+    }
+}
+```
+
+If there are collisions in the names of the schemas (two properties from different schemas with the same name), we can use the full name instead.
+
+```json
+{
+    "spec": {
+        "user": ["name", "email", "teams"],
+        "user.teams": ["id"]
     }
 }
 ```
