@@ -2,8 +2,13 @@
     "id": 10,
     "name": "John Doe",
     "dob": "1990-01-23",
+    "age": 31,
     "phoneNumber": "55000000000",
     "email": "johndoe@email.com",
+    "address": {
+        "street": "fake street",
+        "city": "london"
+    },
     "teams": [
         {
             "id": 13,

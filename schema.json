@@ -3,5 +3,8 @@
     "spec": {
         "user": ["name", "email", "teams"],
         "teams": ["id", "name"]
+    },
+    "filters": {
+        "status": "active"
     }
 }
